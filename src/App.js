@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './App.css';
+import './index.css';
 import ToDo from './components/ToDo.js';
 
 class App extends Component {
@@ -37,8 +37,8 @@ class App extends Component {
 
   deleteTodo(index){
     const filteredTodos = this.state.todos.slice();
-    const todo = filteredTodos[index];
-    this.setState({todos: todo});
+    filteredTodos.splice(index, 1)
+    this.setState({todos: filteredTodos});
   }
 
   render() {
@@ -49,8 +49,8 @@ class App extends Component {
           <ToDo key = {index} description = {todo.description} isComplete = {todo.isCompleted} toggleComplete = {() => this.toggleComplete(index)} deleteTodo = {() => this.deleteTodo(index)}/>)}
         </ul>
         <form onSubmit = {(e) => this.handleSubmit(e) }>
-          <input type = 'text' value = {this.state.newTodoDescription} onChange={ (e) => this.handleChange(e) }/>
-          <input type = 'submit'/> 
+          <input className = "input" type = 'text' value = {this.state.newTodoDescription} onChange={ (e) => this.handleChange(e) }/>
+          <input className = "button" type = 'submit'/> 
         </form>
       </div>
     );
@@ -58,4 +58,3 @@ class App extends Component {
 }
 
 export default App;
-
