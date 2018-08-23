@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import './index.css';
+<<<<<<< HEAD
 import ToDo from './ToDo.js';
+=======
+import ToDo from './components/ToDo.js';
+>>>>>>> assignment-8-events-to-do
 
 class App extends Component {
   constructor(props){
