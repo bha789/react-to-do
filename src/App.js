@@ -1,30 +1,21 @@
 import React, { Component } from 'react';
-import './App.css';
-import ToDo from './components/ToDo.js';
+import './index.css';
+import ToDo from './ToDo.js';
 
 class App extends Component {
   constructor(props){
     super(props);
     this.state = {
       todos: [
-        {description: 'Walk the cat', isCompleted: true},
-        {description: 'Throw away the dishes', isCompleted: false},
-        {description: 'Buy new dishes', isCompleted: false}
+      {description: 'clean house', isCompleted: true},
+      {description: 'feed cat', isCompleted: false},
+      {description: 'take out trash', isCompleted: false}
       ],
+
       newTodoDescription: ''
     };
   }
 
-  handleChange(e){
-    this.setState({newTodoDescription: e.target.value})
-  }
-
-  handleSubmit(e){
-    e.preventDefault();
-    if(!this.state.newTodoDescription) {return}
-    const newTodo = { description: this.state.newTodoDescription, isCompleted: false };
-    this.setState({ todos: [...this.state.todos, newTodo], newTodoDescription: '' });    
-  }
 
   toggleComplete(index){
     const todos = this.state.todos.slice();
@@ -33,21 +24,38 @@ class App extends Component {
     this.setState({todos : todos});
   }
 
+  handleSubmit(e){
+    e.preventDefault();
+    if (!this.state.newTodoDescription) { return }
+    const newTodo = { description: this.state.newTodoDescription, isCompleted: false };
+    this.setState({ todos: [...this.state.todos, newTodo], newTodoDescription: '' });
+  }
+
+  handleChange(e){
+    this.setState({newTodoDescription: e.target.value})
+  }
+
+  deleteTodo(index){
+    const filteredTodos = this.state.todos.slice();
+    filteredTodos.splice(index, 1)
+    this.setState({todos: filteredTodos});
+  }
+
   render() {
     return (
       <div className="App">
-      <ul>
-       {this.state.todos.map( (todo, index) => 
-        <ToDo key={index} description={todo.description} isCompleted={todo.isCompleted} toggleComplete={() => this.toggleComplete(index)}/>
-      )}
-      </ul>
-      <form onSubmit={ (e) => this.handleSubmit(e) }>
-        <input type='text' value={this.newTodoDescription} onChange={ (e) => this.handleChange(e)}/>
-        <input type='submit'/>
-      </form>
+        <ul>
+          {this.state.todos.map( (todo, index) => 
+          <ToDo key = {index} description = {todo.description} isComplete = {todo.isCompleted} toggleComplete = {() => this.toggleComplete(index)} deleteTodo = {() => this.deleteTodo(index)}/>)}
+        </ul>
+        <form onSubmit = {(e) => this.handleSubmit(e) }>
+          <input className = "input" type = 'text' value = {this.state.newTodoDescription} onChange={ (e) => this.handleChange(e) }/>
+          <input className = "button" type = 'submit'/> 
+        </form>
       </div>
     );
   }
 }
 
 export default App;
+
